@@ -1,0 +1,109 @@
+## Variables
+@baseUrl = http://localhost:3000
+
+@contentType = application/json
+
+### Get basic
+GET {{baseUrl}}
+
+### Get all tasks
+# @name getAllTasks
+GET {{baseUrl}}/tasks
+
+### Get all tasks paginated
+# @name getAllTasksPaginated
+GET {{baseUrl}}/tasks?offset=1&limit=2
+
+### Get tasks in progress
+# @name getTasksInProgress
+GET {{baseUrl}}/tasks?status=IN_PROGRESS
+
+### Get tasks with search
+# @name getTasksWithSearch
+GET {{baseUrl}}/tasks?search=toto
+
+### Get tasks filtered by labels
+# @name getTasksFilteredByLabels
+GET {{baseUrl}}/tasks?labels=bug
+
+### Get tasks sorted
+# @name getTasksSorted
+GET {{baseUrl}}/tasks?sortBy=title&sortOrder=DESC
+
+### Create new task
+# @name createTask
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Learn NestJS",
+  "description": "Complete the NestJS tutorial",
+  "status": "OPEN",
+  "userId": "7755f9ed-a833-4b0f-a036-bb9dd17bac91",
+  "labels": [
+    {
+      "name": "urgent"
+    }
+  ]
+}
+
+### Set the task id
+
+@taskId = {{createTask.response.body.id}}
+
+
+### Get task by ID
+GET {{baseUrl}}/tasks/{{taskId}}
+
+### Update a task with wrong status
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "start learning NestJS",
+  "description": "Start learning the NestJS tutorial",
+  "status": "STARTED"
+}
+
+# ### Update the status of a task
+# PATCH {{baseUrl}}/tasks/37af9a52-75ab-491a-a817-fa3461db1937/status
+# Content-Type: {{contentType}}
+
+# {
+#   "status": "IN_PROGRESS"
+# }
+
+### Update the status of a task
+PATCH {{baseUrl}}/tasks/{{taskId}}
+Content-Type: {{contentType}}
+
+{
+  "status": "IN_PROGRESS",
+  "labels": [{"name": "done"}]
+}
+
+### Delete a task
+DELETE {{baseUrl}}/tasks/{{taskId}}
+
+### Add labels to a task
+# @name addLabels
+POST {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+
+[
+  {
+    "name": "prioritized"
+  },
+  {
+    "name": "bug"
+  }
+]
+
+### Remove labels from a task
+# @name removeLabels
+DELETE {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+
+[
+  "bug"
+]
