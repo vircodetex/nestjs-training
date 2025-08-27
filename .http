@@ -1,45 +1,76 @@
 ## Variables
-@baseUrl = http://localhost:3000
+# @baseUrl = http://localhost:3000
+# @userId in the database = 57568e53-cee0-4af9-bff6-d0ef7afed536
+
+# @baseUrl = https://vm-nestjs-app-k6afx.ondigitalocean.app
+# @userId in the database = bbf8ae8e-32e7-4ed8-9826-dfcb767f004b
+
+@baseUrl = https://vm-nestjs-app-k6afx.ondigitalocean.app
+@userId = bbf8ae8e-32e7-4ed8-9826-dfcb767f004b
+
+# Default user credentials: dummy values here
+@defaultUserMail = xxx@yyyy.net
+@defaultUserPwd = zzzzzZ1!
 
 @contentType = application/json
 
 ### Get basic
 GET {{baseUrl}}
 
+### POST Login to get the token
+# @name Login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "{{defaultUserMail}}",
+  "password": "{{defaultUserPwd}}"
+}
+
+### Set the user token
+@userToken = {{Login.response.body.accessToken}}
+
 ### Get all tasks
 # @name getAllTasks
 GET {{baseUrl}}/tasks
+Authorization: Bearer {{userToken}}
 
 ### Get all tasks paginated
 # @name getAllTasksPaginated
 GET {{baseUrl}}/tasks?offset=1&limit=2
+Authorization: Bearer {{userToken}}
 
 ### Get tasks in progress
 # @name getTasksInProgress
 GET {{baseUrl}}/tasks?status=IN_PROGRESS
+Authorization: Bearer {{userToken}}
 
 ### Get tasks with search
 # @name getTasksWithSearch
 GET {{baseUrl}}/tasks?search=toto
+Authorization: Bearer {{userToken}}
 
 ### Get tasks filtered by labels
 # @name getTasksFilteredByLabels
 GET {{baseUrl}}/tasks?labels=bug
+Authorization: Bearer {{userToken}}
 
 ### Get tasks sorted
 # @name getTasksSorted
 GET {{baseUrl}}/tasks?sortBy=title&sortOrder=DESC
+Authorization: Bearer {{userToken}}
 
 ### Create new task
 # @name createTask
 POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
+Authorization: Bearer {{userToken}}
 
 {
   "title": "Learn NestJS",
   "description": "Complete the NestJS tutorial",
   "status": "OPEN",
-  "userId": "7755f9ed-a833-4b0f-a036-bb9dd17bac91",
+  "userId": "{{userId}}",
   "labels": [
     {
       "name": "urgent"
@@ -54,10 +85,12 @@ Content-Type: {{contentType}}
 
 ### Get task by ID
 GET {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{userToken}}
 
 ### Update a task with wrong status
 POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
+Authorization: Bearer {{userToken}}
 
 {
   "title": "start learning NestJS",
@@ -76,6 +109,7 @@ Content-Type: {{contentType}}
 ### Update the status of a task
 PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: {{contentType}}
+Authorization: Bearer {{userToken}}
 
 {
   "status": "IN_PROGRESS",
@@ -84,11 +118,14 @@ Content-Type: {{contentType}}
 
 ### Delete a task
 DELETE {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{userToken}}
 
 ### Add labels to a task
 # @name addLabels
 POST {{baseUrl}}/tasks/{{taskId}}/labels
 Content-Type: {{contentType}}
+Authorization: Bearer {{userToken}}
+
 
 [
   {
@@ -103,6 +140,7 @@ Content-Type: {{contentType}}
 # @name removeLabels
 DELETE {{baseUrl}}/tasks/{{taskId}}/labels
 Content-Type: {{contentType}}
+Authorization: Bearer {{userToken}}
 
 [
   "bug"

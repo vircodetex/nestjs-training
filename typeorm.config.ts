@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 
 config();
 
-console.log('DDDDDDDDDD Migration ENV:', JSON.stringify(process.env, null, 2));
+//console.log('DDDDDDDDDD Migration ENV:', JSON.stringify(process.env, null, 2));
 
 
 export default new DataSource({

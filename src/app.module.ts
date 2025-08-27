@@ -38,7 +38,7 @@ import { UsersModule } from './users/users.module';
           ...configService.get('database'),
           entities: [Task, TaskLabel, User]
         };
-        console.log('AAAAAAAAAA TypeORM config:', JSON.stringify(dbConfig, null, 2));
+        //console.log('AAAAAAAAAA TypeORM config:', JSON.stringify(dbConfig, null, 2));
         return dbConfig;
       },
     }),
@@ -59,6 +59,6 @@ import { UsersModule } from './users/users.module';
 })
 export class AppModule {
   constructor() {
-    console.log('BBBBBBBBBB ENV VARIABLES:', JSON.stringify(process.env, null, 2));
+    //console.log('BBBBBBBBBB ENV VARIABLES:', JSON.stringify(process.env, null, 2));
   }
 }
