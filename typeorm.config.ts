@@ -3,6 +3,9 @@ import { DataSource } from 'typeorm';
 
 config();
 
+console.log('DDDDDDDDDD Migration ENV:', JSON.stringify(process.env, null, 2));
+
+
 export default new DataSource({
     type: "postgres",
     host: process.env.DB_HOST,
@@ -14,5 +17,8 @@ export default new DataSource({
     //look in the dist folder of transpile all the entities we have
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['dist/src/migrations/*{.ts,.js}'],
+    ssl: {
+        rejectUnauthorized: false,
+    },
 
 })
