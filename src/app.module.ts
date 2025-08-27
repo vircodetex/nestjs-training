@@ -33,10 +33,14 @@ import { UsersModule } from './users/users.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: TypedConfigService) => ({
-        ...configService.get('database'),
-        entities: [Task, TaskLabel, User]
-      }),
+      useFactory: (configService: TypedConfigService) => {
+        const dbConfig = {
+          ...configService.get('database'),
+          entities: [Task, TaskLabel, User]
+        };
+        console.log('AAAAAAAAAA TypeORM config:', JSON.stringify(dbConfig, null, 2));
+        return dbConfig;
+      },
     }),
     TasksModule,
     UsersModule
@@ -53,4 +57,8 @@ import { UsersModule } from './users/users.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    console.log('BBBBBBBBBB ENV VARIABLES:', JSON.stringify(process.env, null, 2));
+  }
+}
