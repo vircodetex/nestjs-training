@@ -12,7 +12,7 @@ export const typeOrmConfig = registerAs("database", (): TypeOrmModuleOptions => 
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    synchronize: Boolean(process.env.DB_SYNC ?? false),
+    synchronize: process.env.DB_SYNC === 'true',
     ssl: {
         rejectUnauthorized: false,
     },
