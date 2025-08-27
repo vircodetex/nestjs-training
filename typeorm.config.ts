@@ -17,8 +17,8 @@ export default new DataSource({
     //look in the dist folder of transpile all the entities we have
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['dist/src/migrations/*{.ts,.js}'],
-    ssl: {
-        rejectUnauthorized: false,
-    },
+    ssl: process.env.DB_SSL === 'true'
+        ? { rejectUnauthorized: false }
+        : false,
 
 })
