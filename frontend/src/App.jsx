@@ -18,11 +18,12 @@ function App() {
   console.log('EEEEEEEEEE import.meta.env:', JSON.stringify(import.meta.env));
   console.log('FFFFFFFFFF process.env:', JSON.stringify(process.env));
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost';
-  const API_PORT = import.meta.env.VITE_API_PORT;
-  let BASE_URL = `${API_URL}/api`;
-  if (API_PORT) { // localhost
-    BASE_URL = `${API_URL}:${API_PORT}/api`;
+  let BASE_URL = '';
+  const API_URL = import.meta.env.VITE_API_URL;
+  if (API_URL) {
+    BASE_URL = `${API_URL}/api`;
+  } else {
+    BASE_URL = 'http://localhost:3000/api';
   }
 
   console.log('GGGGGGGGGG BASE_URL:', BASE_URL);

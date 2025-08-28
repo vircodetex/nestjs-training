@@ -21,8 +21,9 @@ services:
     build:
       context: ./backend
     container_name: nestjs_backend
-    #env_file:
-    #  - ./backend/.env
+    # env_file local ONLY
+    env_file:
+      - ./backend/.env
     ports:
       - "3000:3000"
     depends_on:
@@ -33,11 +34,12 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_API_URL: https://your-backend-url/api
+        # VITE_API_URL: https://localhost
+        # VITE_API_PORT: 3000
         NODE_ENV: production
     container_name: react_frontend
     ports:
-      - "3000:80"
+      - "4173:80"
     restart: unless-stopped
 
 volumes:
