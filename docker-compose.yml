@@ -32,6 +32,9 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        VITE_API_URL: https://your-backend-url/api
+        NODE_ENV: production
     container_name: react_frontend
     ports:
       - "3000:80"
