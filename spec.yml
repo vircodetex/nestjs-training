@@ -87,15 +87,14 @@ services:
     instance_size_slug: apps-s-1vcpu-0.5gb
     routes:
       - path: /api(/.*)?
-        preserve_path: true
 
   - name: frontend
-    git:
+    dockerfile_path: frontend/Dockerfile
+    github:
       branch: master
+      deploy_on_push: true
+      repo: vircodetex/nestjs-training
     source_dir: frontend
-    build_command: npm install && npm run build
-    run_command: npm run preview
     http_port: 4173
     routes:
       - path: /
-        preserve_path: true
