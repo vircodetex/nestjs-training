@@ -15,12 +15,17 @@ function App() {
   const [taskDesc, setTaskDesc] = useState('');
   const [taskStatus, setTaskStatus] = useState('');
 
+  console.log('EEEEEEEEEE import.meta.env:', JSON.stringify(import.meta.env));
+  console.log('FFFFFFFFFF process.env:', JSON.stringify(process.env));
+
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost';
   const API_PORT = import.meta.env.VITE_API_PORT;
   let BASE_URL = `${API_URL}/api`;
   if (API_PORT) { // localhost
     BASE_URL = `${API_URL}:${API_PORT}/api`;
   }
+
+  console.log('GGGGGGGGGG BASE_URL:', BASE_URL);
 
   const fetchHello = async () => {
     setHelloStatus('');
