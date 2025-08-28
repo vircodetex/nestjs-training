@@ -60,6 +60,8 @@ ingress:
           exact: ""
         path:
           prefix: /
+          # preserve_path_prefix is only configurable via DigitalOcean App Platform dashboard
+          # preserve_path_prefix: false
     - component:
         name: backend
       match:
@@ -67,6 +69,8 @@ ingress:
           exact: ""
         path:
           prefix: /api
+          # preserve_path_prefix is only configurable via DigitalOcean App Platform dashboard
+          # preserve_path_prefix: true
 
 services:
   - name: backend
