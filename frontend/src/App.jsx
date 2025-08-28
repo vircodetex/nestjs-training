@@ -16,8 +16,11 @@ function App() {
   const [taskStatus, setTaskStatus] = useState('');
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost';
-  const API_PORT = import.meta.env.VITE_API_PORT || '3000';
-  const BASE_URL = `${API_URL}:${API_PORT}/api`;
+  const API_PORT = import.meta.env.VITE_API_PORT;
+  let BASE_URL = `${API_URL}/api`;
+  if (API_PORT) { // localhost
+    BASE_URL = `${API_URL}:${API_PORT}/api`;
+  }
 
   const fetchHello = async () => {
     setHelloStatus('');
