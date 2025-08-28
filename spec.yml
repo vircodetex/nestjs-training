@@ -51,7 +51,7 @@ envs:
     scope: RUN_AND_BUILD_TIME
     value: production
   - key: VITE_API_URL
-    scope: RUN_AND_BUILD_TIME
+    scope: BUILD_TIME
     value: https://vm-nestjs-app-k6afx.ondigitalocean.app
   # - key: VITE_API_PORT
   #   scope: RUN_AND_BUILD_TIME
