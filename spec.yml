@@ -13,50 +13,6 @@ databases:
     name: db
     version: "14"
 
-envs:
-  - key: APP_MESSAGE_PREFIX
-    scope: RUN_AND_BUILD_TIME
-    value: "\U0001F680"
-  - key: DB_HOST
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.HOSTNAME}
-  - key: DB_PORT
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.PORT}
-  - key: DB_USER
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.USERNAME}
-  - key: DB_PASSWORD
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.PASSWORD}
-  - key: DB_DATABASE
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.DATABASE}
-  - key: DB_SYNC
-    scope: RUN_AND_BUILD_TIME
-    value: "false"
-  - key: JWT_SECRET
-    scope: RUN_AND_BUILD_TIME
-    value: 60b76bf95c161a762d5dba5c42b3501560b4fb271335db4c972ecf1ef2cfa71f
-  - key: JWT_EXPIRES_IN
-    scope: RUN_AND_BUILD_TIME
-    value: 60m
-  - key: DATABASE_URL
-    scope: RUN_AND_BUILD_TIME
-    value: ${db.DATABASE_URL}
-  - key: DB_SSL
-    scope: RUN_AND_BUILD_TIME
-    value: "true"
-  - key: NODE_ENV
-    scope: RUN_AND_BUILD_TIME
-    value: production
-  - key: VITE_API_URL
-    scope: BUILD_TIME
-    value: https://vm-nestjs-app-k6afx.ondigitalocean.app
-  # - key: VITE_API_PORT
-  #   scope: RUN_AND_BUILD_TIME
-  #   value: "3000"
-
 ingress:
   rules:
     - component:
@@ -85,6 +41,43 @@ services:
     http_port: 3000
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
+    envs:
+      - key: APP_MESSAGE_PREFIX
+        scope: RUN_AND_BUILD_TIME
+        value: "\U0001F680"
+      - key: DB_HOST
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.HOSTNAME}
+      - key: DB_PORT
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.PORT}
+      - key: DB_USER
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.USERNAME}
+      - key: DB_PASSWORD
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.PASSWORD}
+      - key: DB_DATABASE
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.DATABASE}
+      - key: DB_SYNC
+        scope: RUN_AND_BUILD_TIME
+        value: "false"
+      - key: JWT_SECRET
+        scope: RUN_AND_BUILD_TIME
+        value: 60b76bf95c161a762d5dba5c42b3501560b4fb271335db4c972ecf1ef2cfa71f
+      - key: JWT_EXPIRES_IN
+        scope: RUN_AND_BUILD_TIME
+        value: 60m
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        value: ${db.DATABASE_URL}
+      - key: DB_SSL
+        scope: RUN_AND_BUILD_TIME
+        value: "true"
+      - key: NODE_ENV
+        scope: RUN_AND_BUILD_TIME
+        value: production
 
   - name: frontend
     dockerfile_path: frontend/Dockerfile
@@ -95,3 +88,13 @@ services:
     source_dir: frontend
     http_port: 80
     instance_size_slug: apps-s-1vcpu-0.5gb
+    envs:
+      - key: NODE_ENV
+        scope: BUILD_TIME
+        value: production
+      - key: VITE_API_URL
+        scope: BUILD_TIME
+        value: https://vm-nestjs-app-k6afx.ondigitalocean.app
+      # - key: VITE_API_PORT
+      #   scope: BUILD_TIME
+      #   value: "3000"
