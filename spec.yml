@@ -85,8 +85,6 @@ services:
     http_port: 3000
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
-    routes:
-      - path: /api(/.*)?
 
   - name: frontend
     dockerfile_path: frontend/Dockerfile
@@ -96,5 +94,3 @@ services:
       repo: vircodetex/nestjs-training
     source_dir: frontend
     http_port: 4173
-    routes:
-      - path: /
